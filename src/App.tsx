@@ -2,7 +2,7 @@ import { Component, For, Show } from 'solid-js';
 import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
-import click from './utils/click-outside';
+
 
 // Components
 const Now = lazy(() => import('./views/Now'));
@@ -19,8 +19,7 @@ declare module 'solid-js' {
   }
 }
 
-// https://github.com/solidjs/solid/discussions/845
-const clickOutside = click;
+
 
 const App: Component = () => {
   const [search, setSearch] = createSignal<string>('Minsk');

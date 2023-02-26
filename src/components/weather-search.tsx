@@ -1,6 +1,10 @@
 import type { Component, Resource } from 'solid-js';
 import { Show, For } from 'solid-js';
 import type { BaseWeatherFilters, LocationsData } from '../api';
+import click from '../utils/click-outside';
+
+// https://github.com/solidjs/solid/discussions/845
+const clickOutside = click;
 
 interface WeatherSearchProps {
   show: () => boolean;
