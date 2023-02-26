@@ -22,11 +22,9 @@ declare module 'solid-js' {
 // https://github.com/solidjs/solid/discussions/845
 const clickOutside = click;
 
-let position: BaseWeatherFilters;
-
 const App: Component = () => {
   const [search, setSearch] = createSignal<string>('Minsk');
-  const [latLong, setLatLong] = createSignal<BaseWeatherFilters>(position);
+  const [latLong, setLatLong] = createSignal<BaseWeatherFilters>();
 
   const setInitalPosition: PositionCallback = ({ coords }) => {
     setLatLong({ lat: coords.latitude, lon: coords.longitude });
