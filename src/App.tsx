@@ -32,9 +32,12 @@ const App: Component = () => {
 
   const [locations] = createResource(search, projectApi.getLocations);
 
-  const [forcast] = createResource(latLong, projectApi.get16DaysForcast);
+  const [todayForcast] = createResource(latLong, projectApi.getTodayForcast);
+  todayForcast();
 
-  forcast();
+  const [fiveDaysforcast] = createResource(latLong, projectApi.get5DaysForcast);
+
+  fiveDaysforcast();
 
   return (
     <Router>

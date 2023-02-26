@@ -17,17 +17,18 @@ class ProjectApi extends BaseApiClient {
     await this.api
       .get('weather', {
         searchParams: {
-          ...filters, //TODO: my key doesn't work'
+          ...filters,
           appid: import.meta.env.VITE_OPEN_WEATHER,
         },
       })
       .json();
 
-  get16DaysForcast = async (filters: BaseWeatherFilters) =>
+  get5DaysForcast = async (filters: BaseWeatherFilters) =>
     await this.api
-      .get('forecast/daily', {
+      .get('forecast', {
+        prefixUrl: 'https://api.openweathermap.org/data/2.5/',
         searchParams: {
-          ...filters, //TODO: my key doesn't work'
+          ...filters,
           appid: import.meta.env.VITE_OPEN_WEATHER,
         },
       })
