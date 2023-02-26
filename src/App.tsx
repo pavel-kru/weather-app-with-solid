@@ -3,7 +3,6 @@ import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
 
-
 // Components
 const Now = lazy(() => import('./views/Now'));
 const Today = lazy(() => import('./views/Today'));
@@ -18,8 +17,6 @@ declare module 'solid-js' {
     }
   }
 }
-
-
 
 const App: Component = () => {
   const [search, setSearch] = createSignal<string>('Minsk');
