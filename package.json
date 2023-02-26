@@ -20,6 +20,7 @@
   "dependencies": {
     "@types/node": "^18.14.1",
     "env-cmd": "^10.1.0",
+    "@solidjs/router": "^0.7.0",
     "ky": "^0.33.2",
     "solid-js": "^1.6.10"
   }
