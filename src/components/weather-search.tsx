@@ -26,36 +26,36 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
       //@ts-ignore
       use:clickOutside={() => setShow(false)}
       onClick={() => setShow(true)}
-      class='relative'
+      class="relative"
     >
       <input
-        id='dropdownInput'
+        id="dropdownInput"
         onFocus={() => {
           if (dropdown) dropdown.style.display = 'initial';
         }}
-        onKeyUp={(e) => {
+        onKeyUp={e => {
           setSearch(e.currentTarget.value);
         }}
-        type='text'
-        class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-44'
-        placeholder='Location'
+        type="text"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-44"
+        placeholder="Location"
         value={search()}
-        data-dropdown-toggle='dropdown'
+        data-dropdown-toggle="dropdown"
       />
       <Show fallback={<div />} when={show()}>
         <div
           ref={dropdown}
-          id='dropdown'
-          class='z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute'
+          id="dropdown"
+          class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute"
         >
           <ul
-            class='p-4 text-sm text-gray-700 dark:text-gray-200 flex flex-col gap-2'
-            aria-labelledby='dropdownInput'
+            class="p-4 text-sm text-gray-700 dark:text-gray-200 flex flex-col gap-2"
+            aria-labelledby="dropdownInput"
           >
             <For each={locations()?.features} fallback={<div>No Options</div>}>
-              {(item) => (
+              {item => (
                 <li
-                  class='cursor-pointer'
+                  class="cursor-pointer"
                   onClick={() => {
                     setSearch(item.properties.address_line1);
                     setShow(false);
