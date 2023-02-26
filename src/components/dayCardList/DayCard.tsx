@@ -1,7 +1,11 @@
 import type { Component } from "solid-js";
 
 const DayCard: Component = () => {
-  return <div class="container mx-auto p-4 min-h-screen bg-main-bg"></div>;
+  return (
+    <div class="w-250 max-w-250 min-h-200 bg-white border-solid border-2 border-indigo-600">
+      CARD
+    </div>
+  );
 };
 
 export default DayCard;
