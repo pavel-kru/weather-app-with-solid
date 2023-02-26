@@ -1,24 +1,63 @@
-import type { Component } from 'solid-js';
-import { createEffect, createResource, createSignal } from 'solid-js';
+import { Component, For, Show } from 'solid-js';
+import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
+import click from './utils/click-outside';
 
 // Components
 const Now = lazy(() => import('./views/Now'));
 const Today = lazy(() => import('./views/Today'));
 const Tomorrow = lazy(() => import('./views/Tomorrow'));
-import { projectApi } from './api';
+import { BaseWeatherFilters, projectApi } from './api';
+import { WeatherSearch } from './components';
+
+declare module 'solid-js' {
+  namespace JSX {
+    interface Directives {
+      model: [() => any, (v: any) => any];
+    }
+  }
+}
+
+// https://github.com/solidjs/solid/discussions/845
+const clickOutside = click;
+
+let position: BaseWeatherFilters;
 
 const App: Component = () => {
   const [search, setSearch] = createSignal<string>('Minsk');
+  const [latLong, setLatLong] = createSignal<BaseWeatherFilters>(position);
+
+  const setInitalPosition: PositionCallback = ({ coords }) => {
+    setLatLong({ lat: coords.latitude, lon: coords.longitude });
+  };
+
+  navigator.geolocation.getCurrentPosition(setInitalPosition);
+
+  const [show, setShow] = createSignal(false);
+
   const [locations] = createResource(search, projectApi.getLocations);
 
-  console.log(locations());
+  const [forcast] = createResource(latLong, projectApi.get16DaysForcast);
+
+  forcast();
 
   return (
     <Router>
       <div class='container mx-auto p-4 min-h-screen bg-main-bg'>
-        <header class='text-2xl font-semibold'>Gismeteo Clone</header>
+        <header class='text-2xl font-semibold'>
+          <div class='flex gap-5'>
+            Gismeteo Clone{''}
+            <WeatherSearch
+              locations={locations}
+              search={search}
+              setSearch={setSearch}
+              setLatLong={setLatLong}
+              setShow={setShow}
+              show={show}
+            />
+          </div>
+        </header>
         <main class='container mx-auto py-4'>
           <nav>
             <A href='/now'>Now</A>
@@ -32,7 +71,6 @@ const App: Component = () => {
           </Routes>
         </main>
       </div>
-      <pre>{JSON.stringify(locations(), null, 2)}</pre>
     </Router>
   );
 };

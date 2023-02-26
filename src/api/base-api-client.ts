@@ -10,23 +10,8 @@ const api = ky.create({
     limit: 3,
     methods: ['get'],
   },
-  hooks: {
-    beforeRequest: [
-      (req, options) => {
-        const { url, method } = req;
-
-        if (url.startsWith(OPEN_WEATHER_BASE_URL) && method === 'GET') {
-          return ky.get(
-            `${req.url}&appid=${import.meta.env.VITE_OPEN_WEATHER}&lang${
-              navigator.language.split('-')[0]
-            }`,
-            options
-          );
-        }
-
-        return req;
-      },
-    ],
+  searchParams: {
+    lang: navigator.language.split('-')[0],
   },
 });
 

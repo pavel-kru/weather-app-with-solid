@@ -21,8 +21,8 @@ export type LocationsData = {
       postcode: string;
       district: string;
       suburb: string;
-      lon: 27.5428318;
-      lat: 53.8649531;
+      lon: number;
+      lat: number;
       formatted: string;
       address_line1: string;
       address_line2: string;
@@ -30,15 +30,15 @@ export type LocationsData = {
       timezone: {
         name: string;
         offset_STD: string;
-        offset_STD_seconds: 10800;
+        offset_STD_seconds: number;
         offset_DST: string;
-        offset_DST_seconds: 10800;
+        offset_DST_seconds: number;
       };
       result_type: string;
       rank: {
-        importance: 0.27501;
-        confidence: 1;
-        confidence_city_level: 1;
+        importance: number;
+        confidence: number;
+        confidence_city_level: number;
         match_type: string;
       };
       place_id: string;

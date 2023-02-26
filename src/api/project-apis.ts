@@ -9,16 +9,29 @@ class ProjectApi extends BaseApiClient {
         searchParams: {
           text: search,
           apiKey: import.meta.env.VITE_GEOAPIFY_API_KEY,
-          lang: navigator.language.split('-')[0],
         },
       })
       .json()) as LocationsData;
 
   getTodayForcast = async (filters: BaseWeatherFilters) =>
-    await this.api.get('weather', { searchParams: filters }).json();
+    await this.api
+      .get('weather', {
+        searchParams: {
+          ...filters, //TODO: my key doesn't work'
+          appid: import.meta.env.VITE_OPEN_WEATHER,
+        },
+      })
+      .json();
 
   get16DaysForcast = async (filters: BaseWeatherFilters) =>
-    await this.api.get('forecast/daily', { searchParams: filters }).json();
+    await this.api
+      .get('forecast/daily', {
+        searchParams: {
+          ...filters, //TODO: my key doesn't work'
+          appid: import.meta.env.VITE_OPEN_WEATHER,
+        },
+      })
+      .json();
 }
 
 export const projectApi = new ProjectApi();
