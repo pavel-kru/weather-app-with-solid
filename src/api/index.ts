@@ -1,3 +1,1 @@
-// weather API: https://openweathermap.org/api
-
-export {}
+export * from './base-api-client';
