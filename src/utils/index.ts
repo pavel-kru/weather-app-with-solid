@@ -16,3 +16,6 @@ export const clearQueryParams = <
 export function objToUrlEncoded(obj: Record<string, any>): URLSearchParams {
   return new URLSearchParams(obj);
 }
+
+
+export * from './click-outside'
