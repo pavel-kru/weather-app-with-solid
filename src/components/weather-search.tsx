@@ -23,7 +23,6 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
   locations,
   setLatLong,
 }) => {
-  let dropdown: HTMLDivElement | undefined = undefined;
 
   return (
     <div
@@ -34,9 +33,6 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
     >
       <input
         id="dropdownInput"
-        onFocus={() => {
-          if (dropdown) dropdown.style.display = 'initial';
-        }}
         onKeyUp={e => {
           setSearch(e.currentTarget.value);
         }}
@@ -48,7 +44,6 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
       />
       <Show fallback={<div />} when={show()}>
         <div
-          ref={dropdown}
           id="dropdown"
           class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute"
         >
