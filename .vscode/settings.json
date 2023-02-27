@@ -1,5 +1,4 @@
 {
   "files.eol": "\n",
-  // https://github.com/nrwl/nx/issues/9465#issuecomment-1080093295
   "typescript.preferences.importModuleSpecifier": "project-relative"
 }

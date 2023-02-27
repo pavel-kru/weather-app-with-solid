@@ -25,7 +25,6 @@ const App: Component = () => {
   const setInitalPosition: PositionCallback = ({ coords }) => {
     setLatLong({ lat: coords.latitude, lon: coords.longitude });
   };
-  //test husky
 
   navigator.geolocation.getCurrentPosition(setInitalPosition);
 
