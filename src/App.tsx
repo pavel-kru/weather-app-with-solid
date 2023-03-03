@@ -1,5 +1,5 @@
-import { Component, For, Show } from 'solid-js';
-import { createResource, createSignal, createMemo } from 'solid-js';
+import { Component, For } from 'solid-js';
+import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
 
@@ -29,7 +29,6 @@ const App: Component = () => {
   // Signals
   const [search, setSearch] = createSignal<string>('Minsk');
   const [latLong, setLatLong] = createSignal<BaseWeatherFilters>();
-  const [show, setShow] = createSignal(false);
 
   const setInitalPosition: PositionCallback = ({ coords }) => {
     setLatLong({ lat: coords.latitude, lon: coords.longitude });
@@ -54,10 +53,8 @@ const App: Component = () => {
             <WeatherSearch
               locations={locations}
               search={search}
-              setSearch={setSearch}
+              onSearch={setSearch}
               setLatLong={setLatLong}
-              setShow={setShow}
-              show={show}
             />
           </div>
         </header>

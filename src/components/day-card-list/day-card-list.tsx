@@ -18,37 +18,27 @@ interface DayCardListProps {
 }
 
 const DayCardList: Component<DayCardListProps> = props => {
-  const [selectedCardId, setSelectedCardId] = createSignal<number>();
   const [selectedCard, setSelectedCard] = createSignal<DayType | null>(null, {
     equals: false,
   });
 
-  createEffect(() => {
-    const selected = props.list.find(card => card.id === selectedCardId());
-    if (selected) {
-      setSelectedCard(selected);
-    } else {
-      setSelectedCard(null);
-    }
-  });
-
-  const isClicked = createSelector(selectedCardId);
+  const isClicked = createSelector(selectedCard);
 
   return (
     <>
       <div class="flex gap-4 mb-2">
         <For each={props.list}>
-          {(day, i) => (
+          {(day) => (
             <DayCard
               day={day}
-              onCardClick={dayId => {
-                if (selectedCardId() !== dayId) {
-                  setSelectedCardId(dayId);
+              onCardClick={card => {
+                if (!selectedCard()) {
+                  setSelectedCard(card);
                 } else {
-                  setSelectedCardId(undefined);
+                  setSelectedCard(null);
                 }
               }}
-              isClicked={isClicked(day.id)}
+              isClicked={isClicked(day)}
             />
           )}
         </For>

@@ -1,4 +1,4 @@
-import { Component, createComputed, createSignal } from 'solid-js';
+import { Component, createComputed, createMemo, createSignal } from 'solid-js';
 
 import type { DayType } from '../components/day-card-list/types';
 
@@ -6,15 +6,11 @@ import type { DayType } from '../components/day-card-list/types';
 import { DayCardList } from '../components';
 
 interface TodayProps {
-  forecast: DayType | unknown;
+  forecast: DayType | undefined;
 }
 
 const Today: Component<TodayProps> = props => {
-  const [list, setList] = createSignal<any>([]);
-  createComputed(() => {
-    if (!props.forecast) return;
-    setList([props.forecast]);
-  });
+  const list = createMemo(() => (props.forecast ? [props.forecast] : []));
 
   return (
     <div class="">

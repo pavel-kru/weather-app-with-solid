@@ -13,12 +13,12 @@ type CardData = {
 
 interface DayCardProps {
   day: DayType;
-  onCardClick: (dayId: number) => void;
+  onCardClick: (day: DayType) => void;
   isClicked: boolean;
 }
 
 const DayCard: Component<DayCardProps> = props => {
-  const [preparedData, setPreparedData] = createSignal<CardData>();
+  // const [preparedData, setPreparedData] = createSignal<CardData>();
 
   // DOCS: https://www.solidjs.com/docs/latest/api#creatememo
   // function createMemo<T>(
@@ -39,10 +39,8 @@ const DayCard: Component<DayCardProps> = props => {
       data.weather.push({ [formattedKey]: value });
     });
 
-    setPreparedData(data);
+    return data;
   });
-
-  cardData();
 
   return (
     <div
@@ -51,9 +49,9 @@ const DayCard: Component<DayCardProps> = props => {
           ? `${cardStylesBasic} ${cardStylesHovered}`
           : cardStylesBasic
       }
-      onClick={() => props.onCardClick(props.day.id)}
+      onClick={() => props.onCardClick(props.day)}
     >
-      <Show when={preparedData()} keyed>
+      <Show when={cardData()} keyed>
         {data => (
           <div class="relative z-10">
             <h3 class="mb-2 font-medium">{data.date}</h3>
