@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      "main-bg": "#d9f8fd1c",
+      "main-bg": "#49e6ff1c",
+      "day-card-bg": "#ffffff",
     },
   },
   plugins: [],
