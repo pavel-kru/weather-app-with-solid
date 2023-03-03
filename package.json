@@ -6,11 +6,22 @@
     "start": "env-cmd -e development vite",
     "dev": "env-cmd -e  development vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "postinstall": "husky install"
+  },
+  "lint-staged": {
+    "*{.ts,.tsx,.js}": [
+      "yarn vite affected:lint --fix=true --files=true --verbose=true",
+      "yarn vite affected --target=stylelint --files=true --fix=true --verbose=true"
+    ]
   },
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
+    "husky": "8.0.3",
+    "lint-staged": "13.1.2",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
     "typescript": "^4.9.5",
