@@ -7,7 +7,7 @@ import click from '../utils/click-outside';
 const clickOutside = click;
 
 interface WeatherSearchProps {
-  search: () => string;
+  search: () => string | undefined;
   onSearch: (search: string) => void;
   locations: Resource<LocationsData>;
   setLatLong: (coords: BaseWeatherFilters) => void;
@@ -38,7 +38,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
           show() ? 'w-64' : 'w-44'
         } transition-all duration-100`}
         placeholder="Location"
-        value={search()}
+        value={search() || ''}
         data-dropdown-toggle="dropdown"
       />
       <Show fallback={<div />} when={show()}>
@@ -49,13 +49,14 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
           } dark:bg-gray-700 absolute transition-all duration-100`}
         >
           <ul
-            class="p-2 text-sm text-gray-700 dark:text-gray-200 flex flex-col gap-2"
+            class="p-2 text-sm text-gray-700 dark:text-gray-200 flex flex-col"
             aria-labelledby="dropdownInput"
           >
             <For each={locations()?.features} fallback={<div>No Options</div>}>
               {item => (
                 <li
-                  class="cursor-pointer hover:bg-slate-200 px-2 rounded-md"
+                  title={item.properties.formatted}
+                  class="cursor-pointer font-normal hover:bg-slate-200 p-2 rounded-md overflow-ellipsis whitespace-nowrap overflow-hidden"
                   onClick={() => {
                     onSearch(item.properties.formatted);
                     setShow(false);
