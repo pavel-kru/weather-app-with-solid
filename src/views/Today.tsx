@@ -1,7 +1,22 @@
-import type { Component } from "solid-js";
+import { Component, createMemo } from 'solid-js';
 
-const Today: Component = () => {
-  return <div class="">TODAY</div>;
+import type { DayType } from '../components/day-card-list/types';
+
+// Components
+import { DayCardList } from '../components';
+
+interface TodayProps {
+  forecast: DayType | undefined;
+}
+
+const Today: Component<TodayProps> = props => {
+  const list = createMemo(() => (props.forecast ? [props.forecast] : []));
+
+  return (
+    <div class="">
+      <DayCardList list={list()} />
+    </div>
+  );
 };
 
 export default Today;

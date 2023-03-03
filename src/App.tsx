@@ -1,4 +1,4 @@
-import { Component, For, Show } from 'solid-js';
+import { Component, For } from 'solid-js';
 import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
@@ -10,7 +10,6 @@ const Tomorrow = lazy(() => import('./views/Tomorrow'));
 import { BaseWeatherFilters, projectApi } from './api';
 import { WeatherSearch } from './components';
 
-
 //https://www.solidjs.com/docs/latest/api#use___
 declare module 'solid-js' {
   namespace JSX {
@@ -20,7 +19,14 @@ declare module 'solid-js' {
   }
 }
 
+const navItems = [
+  { path: '/now', title: 'Now' },
+  { path: '/tomorrow', title: 'Tomorrow' },
+  { path: '/', title: 'Today' },
+];
+
 const App: Component = () => {
+  // Signals
   const [search, setSearch] = createSignal<string>('Minsk');
   const [latLong, setLatLong] = createSignal<BaseWeatherFilters>();
 
@@ -30,16 +36,13 @@ const App: Component = () => {
 
   navigator.geolocation.getCurrentPosition(setInitalPosition);
 
-  const [show, setShow] = createSignal(false);
-
+  // Resources
   const [locations] = createResource(search, projectApi.getLocations);
-
-  const [todayForcast] = createResource(latLong, projectApi.getTodayForcast);
-  todayForcast();
-
-  const [fiveDaysforcast] = createResource(latLong, projectApi.get5DaysForcast);
-
-  fiveDaysforcast();
+  const [todayForecast] = createResource(latLong, projectApi.getTodayForecast);
+  const [fiveDaysForecast] = createResource(
+    latLong,
+    projectApi.get5DaysForecast,
+  );
 
   return (
     <Router>
@@ -50,23 +53,30 @@ const App: Component = () => {
             <WeatherSearch
               locations={locations}
               search={search}
-              setSearch={setSearch}
+              onSearch={setSearch}
               setLatLong={setLatLong}
-              setShow={setShow}
-              show={show}
             />
           </div>
         </header>
         <main class="container mx-auto py-4">
-          <nav>
-            <A href="/now">Now</A>
-            <A href="/tomorrow">Tomorrow</A>
-            <A href="/">Today</A>
+          <nav class="mb-4">
+            <For each={navItems}>
+              {item => (
+                <A
+                  href={item.path}
+                  class="mr-3 font-bold p-2 border"
+                  activeClass="bg-blue-300"
+                  end={item.path === '/'}
+                >
+                  {item.title}
+                </A>
+              )}
+            </For>
           </nav>
           <Routes>
             <Route path="/now" component={Now} />
             <Route path="/tomorrow" component={Tomorrow} />
-            <Route path="/" component={Today} />
+            <Route path="/" element={<Today forecast={todayForecast()} />} />
           </Routes>
         </main>
       </div>

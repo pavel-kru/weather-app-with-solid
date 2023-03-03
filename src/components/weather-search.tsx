@@ -1,4 +1,4 @@
-import type { Component, Resource } from 'solid-js';
+import { Component, createSignal, Resource } from 'solid-js';
 import { Show, For } from 'solid-js';
 import type { BaseWeatherFilters, LocationsData } from '../api';
 import click from '../utils/click-outside';
@@ -7,22 +7,20 @@ import click from '../utils/click-outside';
 const clickOutside = click;
 
 interface WeatherSearchProps {
-  show: () => boolean;
-  setShow: (show: boolean) => void;
   search: () => string;
-  setSearch: (search: string) => void;
+  onSearch: (search: string) => void;
   locations: Resource<LocationsData>;
   setLatLong: (coords: BaseWeatherFilters) => void;
 }
 
 export const WeatherSearch: Component<WeatherSearchProps> = ({
-  show,
-  setShow,
   search,
-  setSearch,
+  onSearch,
   locations,
   setLatLong,
 }) => {
+  const [show, setShow] = createSignal(false);
+
   return (
     <div
       //@ts-ignore
@@ -33,7 +31,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
       <input
         id="dropdownInput"
         onKeyUp={e => {
-          setSearch(e.currentTarget.value);
+          onSearch(e.currentTarget.value);
         }}
         type="text"
         class={`bg-gray-50 outline-none border border-gray-300 text-gray-900 text-sm rounded-lg hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
@@ -59,7 +57,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
                 <li
                   class="cursor-pointer hover:bg-slate-200 px-2 rounded-md"
                   onClick={() => {
-                    setSearch(item.properties.formatted);
+                    onSearch(item.properties.formatted);
                     setShow(false);
                     setLatLong({
                       lat: item.properties.lat,

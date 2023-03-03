@@ -1,9 +1,10 @@
+import { DayType } from '../components/day-card-list/types';
 import { BaseWeatherFilters, LocationsData } from './api.types';
 import { BaseApiClient } from './base-api-client';
 
 class ProjectApi extends BaseApiClient {
-  getLocations = async (search: string) =>
-    (await this.api
+  getLocations = async (search: string): Promise<LocationsData> =>
+    await this.api
       .get(`geocode/autocomplete`, {
         prefixUrl: 'https://api.geoapify.com/v1/',
         searchParams: {
@@ -11,9 +12,9 @@ class ProjectApi extends BaseApiClient {
           apiKey: import.meta.env.VITE_GEOAPIFY_API_KEY,
         },
       })
-      .json()) as LocationsData;
+      .json();
 
-  getTodayForcast = async (filters: BaseWeatherFilters) =>
+  getTodayForecast = async (filters: BaseWeatherFilters): Promise<DayType> =>
     await this.api
       .get('weather', {
         searchParams: {
@@ -23,7 +24,7 @@ class ProjectApi extends BaseApiClient {
       })
       .json();
 
-  get5DaysForcast = async (filters: BaseWeatherFilters) =>
+  get5DaysForecast = async (filters: BaseWeatherFilters) =>
     await this.api
       .get('forecast', {
         prefixUrl: 'https://api.openweathermap.org/data/2.5/',
