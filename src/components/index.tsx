@@ -9,4 +9,5 @@
 // 8. Current weather:
 // - sun path
 
-export { default as DayCardList } from "./dayCardList/DayCardList";
+export { default as DayCardList } from './day-card-list/day-card-list';
+export * from './weather-search';
