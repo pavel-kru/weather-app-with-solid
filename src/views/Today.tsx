@@ -1,4 +1,4 @@
-import { Component, createComputed, createMemo, createSignal } from 'solid-js';
+import { Component, createMemo } from 'solid-js';
 
 import type { DayType } from '../components/day-card-list/types';
 
