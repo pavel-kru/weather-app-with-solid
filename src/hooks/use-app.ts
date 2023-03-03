@@ -21,7 +21,7 @@ export const useApp = () => {
   );
 
   createEffect(initial => {
-    if (!initial) return true;
+    if (!initial) return false;
 
     const forcast = todayForecast();
     if (!forcast) return true;
