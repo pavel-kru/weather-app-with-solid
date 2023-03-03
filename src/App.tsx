@@ -10,7 +10,6 @@ const Tomorrow = lazy(() => import('./views/Tomorrow'));
 import { BaseWeatherFilters, projectApi } from './api';
 import { WeatherSearch } from './components';
 
-
 //https://www.solidjs.com/docs/latest/api#use___
 declare module 'solid-js' {
   namespace JSX {
