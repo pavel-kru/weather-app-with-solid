@@ -28,19 +28,23 @@ const DayCardList: Component<DayCardListProps> = props => {
     <>
       <div class="flex gap-4 mb-2">
         <For each={props.list}>
-          {(day) => (
-            <DayCard
-              day={day}
-              onCardClick={card => {
-                if (!selectedCard()) {
-                  setSelectedCard(card);
-                } else {
-                  setSelectedCard(null);
-                }
-              }}
-              isClicked={isClicked(day)}
-            />
-          )}
+          {(day, i) => {
+            if (i() === 0) setSelectedCard(null);
+
+            return (
+              <DayCard
+                day={day}
+                onCardClick={card => {
+                  if (!selectedCard()) {
+                    setSelectedCard(card);
+                  } else {
+                    setSelectedCard(null);
+                  }
+                }}
+                isClicked={isClicked(day)}
+              />
+            );
+          }}
         </For>
       </div>
 
