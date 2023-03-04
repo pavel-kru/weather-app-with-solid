@@ -1,3 +1,4 @@
+import { debounce } from '@solid-primitives/scheduled';
 import { Component, createSignal, Resource } from 'solid-js';
 import { Show, For } from 'solid-js';
 import type { BaseWeatherFilters, LocationsData } from '../api';
@@ -11,10 +12,18 @@ interface WeatherSearchProps {
   onSearch: (search: string) => void;
   locations: Resource<LocationsData>;
   setLatLong: (coords: BaseWeatherFilters) => void;
+  debounce?: number;
 }
 
 export const WeatherSearch: Component<WeatherSearchProps> = props => {
+  const [search, setSearch] = createSignal<string | undefined>();
   const [show, setShow] = createSignal(false);
+
+  //https://yarnpkg.com/package/@solid-primitives/scheduled
+  const trigger = debounce(
+    (search: string) => props.onSearch(search),
+    props.debounce || 500,
+  );
 
   return (
     <div
@@ -24,22 +33,28 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
       class="relative"
     >
       <input
+        autocomplete="off"
         id="dropdownInput"
         onKeyUp={e => {
-          props.onSearch(e.currentTarget.value);
+          !show() && setShow(true);
+          
+          setSearch(e.currentTarget.value);
+
+          trigger.clear();
+          trigger(e.currentTarget.value);
         }}
         type="text"
         class={`bg-gray-50 outline-none border border-gray-300 text-gray-900 text-sm rounded-lg hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
           show() ? 'w-64' : 'w-44'
         } transition-all duration-100`}
         placeholder="Location"
-        value={props.search() || ''}
+        value={search() || props.search()}
         data-dropdown-toggle="dropdown"
       />
       <Show fallback={<div />} when={show()}>
         <div
           id="dropdown"
-          class={`z-1000 bg-white divide-y divide-gray-100 rounded-lg shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
+          class={`z-50 bg-white divide-y divide-gray-100 rounded-lg shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
             show() ? 'w-64' : 'w-44'
           } dark:bg-gray-700 absolute transition-all duration-100`}
         >

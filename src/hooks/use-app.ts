@@ -12,8 +12,11 @@ export const useApp = () => {
 
   navigator.geolocation.getCurrentPosition(setInitalPosition);
 
+  
+
   // Resources
   const [locations] = createResource(search, projectApi.getLocations);
+
   const [todayForecast] = createResource(latLong, projectApi.getTodayForecast);
   const [fiveDaysForecast] = createResource(
     latLong,
