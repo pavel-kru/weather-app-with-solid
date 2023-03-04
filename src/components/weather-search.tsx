@@ -49,7 +49,12 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
           >
             <For
               each={props.locations()?.features}
-              fallback={<div>No Options</div>}
+              fallback={
+                <div>
+                  {' '}
+                  {props.locations.loading ? 'Loading...' : 'No Options'}
+                </div>
+              }
             >
               {item => (
                 <li
