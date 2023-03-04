@@ -28,7 +28,7 @@ export const useApp = () => {
 
     const { sys, name } = forcast;
     const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
-    setSearch(`${regionNames.of(sys?.country)}, ${name}`);
+    setSearch(`${name}, ${regionNames.of(sys?.country)}`);
 
     return false;
   }, true /* initial */);

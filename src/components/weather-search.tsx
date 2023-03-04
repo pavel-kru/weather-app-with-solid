@@ -13,12 +13,7 @@ interface WeatherSearchProps {
   setLatLong: (coords: BaseWeatherFilters) => void;
 }
 
-export const WeatherSearch: Component<WeatherSearchProps> = ({
-  search,
-  onSearch,
-  locations,
-  setLatLong,
-}) => {
+export const WeatherSearch: Component<WeatherSearchProps> = props => {
   const [show, setShow] = createSignal(false);
 
   return (
@@ -31,14 +26,14 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
       <input
         id="dropdownInput"
         onKeyUp={e => {
-          onSearch(e.currentTarget.value);
+          props.onSearch(e.currentTarget.value);
         }}
         type="text"
         class={`bg-gray-50 outline-none border border-gray-300 text-gray-900 text-sm rounded-lg hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
           show() ? 'w-64' : 'w-44'
         } transition-all duration-100`}
         placeholder="Location"
-        value={search() || ''}
+        value={props.search() || ''}
         data-dropdown-toggle="dropdown"
       />
       <Show fallback={<div />} when={show()}>
@@ -52,15 +47,18 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
             class="p-2 text-sm text-gray-700 dark:text-gray-200 flex flex-col"
             aria-labelledby="dropdownInput"
           >
-            <For each={locations()?.features} fallback={<div>No Options</div>}>
+            <For
+              each={props.locations()?.features}
+              fallback={<div>No Options</div>}
+            >
               {item => (
                 <li
                   title={item.properties.formatted}
                   class="cursor-pointer font-normal hover:bg-slate-200 p-2 rounded-md overflow-ellipsis whitespace-nowrap overflow-hidden"
                   onClick={() => {
-                    onSearch(item.properties.formatted);
+                    props.onSearch(item.properties.formatted);
                     setShow(false);
-                    setLatLong({
+                    props.setLatLong({
                       lat: item.properties.lat,
                       lon: item.properties.lon,
                     });
