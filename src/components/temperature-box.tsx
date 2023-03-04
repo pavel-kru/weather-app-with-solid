@@ -14,6 +14,8 @@ export const TemperatureBox: Component<Props> = props => {
     >
       {props.temperature.toFixed(0) === '-0'
         ? '0'
+        : props.temperature > 0
+        ? `+${props.temperature.toFixed(0)}`
         : props.temperature.toFixed(0)}
     </div>
   );
