@@ -52,7 +52,7 @@ const App: Component = () => {
             <TemperatureBox
               temperature={
                 todayForecast()?.main.temp
-                  ? todayForecast().main.temp
+                  ? todayForecast()?.main.temp
                   : 0
               }
             />
