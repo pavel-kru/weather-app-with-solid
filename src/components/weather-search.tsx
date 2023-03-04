@@ -67,7 +67,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
       <Show fallback={<div />} when={show()}>
         <div
           id="dropdown"
-          class={`z-50 bg-white divide-y divide-gray-100 rounded-lg shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
+          class={`z-50 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
             show() ? 'w-64' : 'w-44'
           } dark:bg-gray-700 absolute transition-all duration-100`}
         >

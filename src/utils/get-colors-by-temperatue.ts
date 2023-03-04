@@ -6,6 +6,7 @@ export const getColorsByTemperature = (temp: number) => {
       colors = 'bg-blue-400/80 border-blue-600';
       break;
     }
+
     case temp > -10 && temp <= 0: {
       colors = 'bg-sky-200 border-sky-400';
       break;
