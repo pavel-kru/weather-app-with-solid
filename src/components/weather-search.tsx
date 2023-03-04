@@ -1,5 +1,5 @@
 import { debounce } from '@solid-primitives/scheduled';
-import { Component, createSignal, Resource } from 'solid-js';
+import { Component, createEffect, createSignal, Resource } from 'solid-js';
 import { Show, For } from 'solid-js';
 import type { BaseWeatherFilters, LocationsData } from '../api';
 import click from '../utils/click-outside';
@@ -25,6 +25,19 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
     props.debounce || 500,
   );
 
+  //set initial search
+  createEffect(alreadySetted => {
+    if (alreadySetted) return true;
+    
+    const propsSearch = props.search();
+
+    if (!propsSearch) return false;
+
+    setSearch(props.search);
+
+    return true;
+  }, false);
+
   return (
     <div
       //@ts-ignore
@@ -37,7 +50,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
         id="dropdownInput"
         onKeyUp={e => {
           !show() && setShow(true);
-          
+
           setSearch(e.currentTarget.value);
 
           trigger.clear();
@@ -48,7 +61,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
           show() ? 'w-64' : 'w-44'
         } transition-all duration-100`}
         placeholder="Location"
-        value={search() || props.search()}
+        value={search()}
         data-dropdown-toggle="dropdown"
       />
       <Show fallback={<div />} when={show()}>
@@ -76,8 +89,10 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
                   title={item.properties.formatted}
                   class="cursor-pointer font-normal hover:bg-slate-200 p-2 rounded-md overflow-ellipsis whitespace-nowrap overflow-hidden"
                   onClick={() => {
-                    props.onSearch(item.properties.formatted);
+                    setSearch(item.properties.formatted);
+
                     setShow(false);
+
                     props.setLatLong({
                       lat: item.properties.lat,
                       lon: item.properties.lon,
