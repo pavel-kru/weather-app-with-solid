@@ -1,4 +1,4 @@
-import { Component, createEffect, For } from 'solid-js';
+import { Component, createEffect, For, Show } from 'solid-js';
 import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
@@ -8,9 +8,9 @@ const Now = lazy(() => import('./views/Now'));
 const Today = lazy(() => import('./views/Today'));
 const Tomorrow = lazy(() => import('./views/Tomorrow'));
 import { BaseWeatherFilters, projectApi } from './api';
-import { WeatherSearch } from './components';
+import { TodayTemperatureBox, WeatherSearch } from './components';
 import { useApp } from './hooks';
-import { TemperatureBox } from './components/temperature-box';
+import { TemperatureBox } from './components/temperature/temperature-box';
 
 //https://www.solidjs.com/docs/latest/api#use___
 declare module 'solid-js' {
@@ -41,7 +41,7 @@ const App: Component = () => {
     <Router>
       <div class="container mx-auto p-4 min-h-screen bg-main-bg">
         <header class="text-2xl font-semibold">
-          <div class="flex gap-5">
+          <div class="flex gap-5 max-h-max">
             Gismeteo Clone{''}
             <WeatherSearch
               locations={locations}
@@ -51,11 +51,12 @@ const App: Component = () => {
             />
             <TemperatureBox
               temperature={
-                todayForecast()?.main.temp
-                  ? todayForecast()?.main.temp
-                  : 0
+                todayForecast()?.main.temp ? todayForecast().main.temp : 0
               }
             />
+            <Show when={todayForecast()?.main}>
+              <TodayTemperatureBox temperature={todayForecast().main} />
+            </Show>
           </div>
         </header>
         <main class="container mx-auto py-4">

@@ -1,5 +1,6 @@
 import type { Component } from 'solid-js';
-import { getColorsByTemperature } from '../utils';
+import { flex, mainTempText } from '../../helpers';
+import { getColorsByTemperature } from '../../utils';
 
 interface Props {
   temperature: number;
@@ -8,7 +9,7 @@ interface Props {
 export const TemperatureBox: Component<Props> = props => {
   return (
     <div
-      class={`drop-shadow-md w-[59px] flex justify-center items-center font-normal text-base border-b-2 ${getColorsByTemperature(
+      class={`drop-shadow-md w-[59px] h-[27px] ${flex} ${mainTempText} border-b-2 ${getColorsByTemperature(
         props.temperature,
       )} `}
     >

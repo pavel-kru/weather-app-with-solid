@@ -10,7 +10,7 @@ type Coord = {
     icon: string;
   };
   
-  type Main = {
+  export type Main = {
     temp: number;
     feels_like: number;
     temp_min: number;
