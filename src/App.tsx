@@ -10,6 +10,7 @@ const Tomorrow = lazy(() => import('./views/Tomorrow'));
 import { BaseWeatherFilters, projectApi } from './api';
 import { WeatherSearch } from './components';
 import { useApp } from './hooks';
+import { TemperatureBox } from './components/temperature-box';
 
 //https://www.solidjs.com/docs/latest/api#use___
 declare module 'solid-js' {
@@ -47,6 +48,13 @@ const App: Component = () => {
               search={search}
               onSearch={setSearch}
               setLatLong={setLatLong}
+            />
+            <TemperatureBox
+              temperature={
+                todayForecast()?.main.temp
+                  ? todayForecast().main.temp
+                  : 0
+              }
             />
           </div>
         </header>

@@ -19,6 +19,7 @@ class ProjectApi extends BaseApiClient {
       .get('weather', {
         searchParams: {
           ...filters,
+          units: 'metric',
           appid: import.meta.env.VITE_OPEN_WEATHER,
         },
       })
