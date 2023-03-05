@@ -12,6 +12,8 @@ module.exports = {
       'main-bg': '#49e6ff1c',
       'day-card-bg': '#ffffff',
     },
+    fontFamily: { Roboto: 'Roboto' },
+    hueRotate: { '-30': `-30deg` },
   },
   plugins: [],
 };

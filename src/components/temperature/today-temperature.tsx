@@ -13,7 +13,7 @@ export const TodayTemperatureBox: Component<Props> = props => {
       <div
         class={`${flex}  ${getColorsByTemperature(
           props.temperature.temp,
-        )} w-[118px] h-[25px] border-b ${mainTempText}`}
+        )} w-[118px] h-[25px] ${mainTempText}`}
       >
         {props.temperature.temp.toFixed(0) === '-0'
           ? '0'
@@ -24,7 +24,11 @@ export const TodayTemperatureBox: Component<Props> = props => {
       <div
         class={`${flex} ${getColorsByTemperature(
           props.temperature.feels_like,
-        )} w-[118px] h-[19px] text-xs font-normal`}
+        )} w-[118px] h-[19px] text-xs font-normal ${
+          props.temperature.feels_like > props.temperature.temp
+            ? 'hue-rotate-30'
+            : '-hue-rotate--30'
+        }`}
       >
         Feels like{' '}
         {props.temperature.feels_like.toFixed(0) === '-0'
