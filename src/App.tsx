@@ -8,9 +8,10 @@ const Now = lazy(() => import('./views/Now'));
 const Today = lazy(() => import('./views/Today'));
 const Tomorrow = lazy(() => import('./views/Tomorrow'));
 import { BaseWeatherFilters, projectApi } from './api';
-import { TodayTemperatureBox, WeatherSearch } from './components';
+import { TodayTemperatureBox, WeatherSearch, Wind } from './components';
 import { useApp } from './hooks';
 import { TemperatureBox } from './components/temperature/temperature-box';
+import { flex } from './helpers';
 
 //https://www.solidjs.com/docs/latest/api#use___
 declare module 'solid-js' {
@@ -49,14 +50,19 @@ const App: Component = () => {
               onSearch={setSearch}
               setLatLong={setLatLong}
             />
-            <TemperatureBox
-              temperature={
-                todayForecast()?.main.temp ? todayForecast().main.temp : 0
-              }
-            />
-            <Show when={todayForecast()?.main}>
-              <TodayTemperatureBox temperature={todayForecast().main} />
-            </Show>
+            <div class={`bg-white ${flex} p-2 gap-2`}>
+              <TemperatureBox
+                temperature={
+                  todayForecast()?.main.temp ? todayForecast().main.temp : 0
+                }
+              />
+              <Show when={todayForecast()?.main}>
+                <TodayTemperatureBox temperature={todayForecast().main} />
+              </Show>
+              <Show when={todayForecast()?.wind}>
+                <Wind wind={todayForecast()?.wind} />
+              </Show>
+            </div>
           </div>
         </header>
         <main class="container mx-auto py-4">

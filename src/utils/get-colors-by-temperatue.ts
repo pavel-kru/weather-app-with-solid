@@ -1,10 +1,10 @@
 export const getColorsByTemperature = (temp: number) => {
   switch (true) {
     case temp <= -10:
-      return 'bg-blue-400/80 border-blue-600';
+      return 'bg-blue-400/60 border-blue-600';
 
     case temp > -10 && temp <= 0:
-      return 'bg-sky-200 border-sky-400';
+      return 'bg-sky-200/80  border-sky-400';
 
     case temp > 0 && temp <= 10:
       return 'bg-lime-200 border-lime-400';

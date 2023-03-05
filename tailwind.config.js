@@ -14,6 +14,7 @@ module.exports = {
     },
     fontFamily: { Roboto: 'Roboto' },
     hueRotate: { '-30': `-30deg` },
+    skew: { '-12': `-12deg` },
   },
   plugins: [],
 };
