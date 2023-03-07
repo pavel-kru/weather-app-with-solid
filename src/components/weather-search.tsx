@@ -28,7 +28,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
   //set initial search
   createEffect(alreadySetted => {
     if (alreadySetted) return true;
-    
+
     const propsSearch = props.search();
 
     if (!propsSearch) return false;
@@ -54,10 +54,10 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
           setSearch(e.currentTarget.value);
 
           trigger.clear();
-          trigger(e.currentTarget.value);
+          e.currentTarget.value && trigger(e.currentTarget.value);
         }}
         type="text"
-        class={`bg-gray-50 outline-none border border-gray-300 text-gray-900 text-sm rounded-lg hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+        class={`bg-gray-30 outline-none border border-gray-200/80 text-gray-900 text-sm rounded-md hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
           show() ? 'w-64' : 'w-44'
         } transition-all duration-100`}
         placeholder="Location"
@@ -67,7 +67,7 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
       <Show fallback={<div />} when={show()}>
         <div
           id="dropdown"
-          class={`z-50 bg-white divide-y divide-gray-100 rounded-lg shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
+          class={`z-50 mt-1 bg-white divide-y divide-gray-100 rounded-md shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
             show() ? 'w-64' : 'w-44'
           } dark:bg-gray-700 absolute transition-all duration-100`}
         >
@@ -79,7 +79,6 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
               each={props.locations()?.features}
               fallback={
                 <div>
-                  {' '}
                   {props.locations.loading ? 'Loading...' : 'No Options'}
                 </div>
               }
