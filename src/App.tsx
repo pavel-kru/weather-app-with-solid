@@ -1,4 +1,4 @@
-import { Component, For } from 'solid-js';
+import { Component, createEffect, For } from 'solid-js';
 import { createResource, createSignal } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
@@ -9,6 +9,7 @@ const Today = lazy(() => import('./views/Today'));
 const Tomorrow = lazy(() => import('./views/Tomorrow'));
 import { BaseWeatherFilters, projectApi } from './api';
 import { WeatherSearch } from './components';
+import { useApp } from './hooks';
 
 //https://www.solidjs.com/docs/latest/api#use___
 declare module 'solid-js' {
@@ -26,23 +27,14 @@ const navItems = [
 ];
 
 const App: Component = () => {
-  // Signals
-  const [search, setSearch] = createSignal<string>('Minsk');
-  const [latLong, setLatLong] = createSignal<BaseWeatherFilters>();
-
-  const setInitalPosition: PositionCallback = ({ coords }) => {
-    setLatLong({ lat: coords.latitude, lon: coords.longitude });
-  };
-
-  navigator.geolocation.getCurrentPosition(setInitalPosition);
-
-  // Resources
-  const [locations] = createResource(search, projectApi.getLocations);
-  const [todayForecast] = createResource(latLong, projectApi.getTodayForecast);
-  const [fiveDaysForecast] = createResource(
-    latLong,
-    projectApi.get5DaysForecast,
-  );
+  const {
+    search,
+    setSearch,
+    setLatLong,
+    locations,
+    todayForecast,
+    fiveDaysForecast,
+  } = useApp();
 
   return (
     <Router>

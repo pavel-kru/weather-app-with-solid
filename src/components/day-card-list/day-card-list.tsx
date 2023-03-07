@@ -22,7 +22,7 @@ const DayCardList: Component<DayCardListProps> = props => {
     equals: false,
   });
 
-  const isClicked = createSelector(selectedCard);
+  // const isClicked = createSelector(selectedCard);
 
   return (
     <>
@@ -41,7 +41,8 @@ const DayCardList: Component<DayCardListProps> = props => {
                     setSelectedCard(null);
                   }
                 }}
-                isClicked={isClicked(day)}
+                isClicked={!!selectedCard()}
+                // isClicked={isClicked(day)}
               />
             );
           }}

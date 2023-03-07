@@ -4,7 +4,9 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: { 1000: '1000' },
+    },
     colors: {
       ...colors,
       'main-bg': '#49e6ff1c',
