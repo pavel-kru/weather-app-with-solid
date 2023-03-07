@@ -11,3 +11,5 @@
 
 export { default as DayCardList } from './day-card-list/day-card-list';
 export * from './weather-search';
+export * from './temperature';
+export * from './wind';

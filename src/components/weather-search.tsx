@@ -1,4 +1,5 @@
-import type { Component, Resource } from 'solid-js';
+import { debounce } from '@solid-primitives/scheduled';
+import { Component, createEffect, createSignal, Resource } from 'solid-js';
 import { Show, For } from 'solid-js';
 import type { BaseWeatherFilters, LocationsData } from '../api';
 import click from '../utils/click-outside';
@@ -7,22 +8,36 @@ import click from '../utils/click-outside';
 const clickOutside = click;
 
 interface WeatherSearchProps {
-  show: () => boolean;
-  setShow: (show: boolean) => void;
-  search: () => string;
-  setSearch: (search: string) => void;
+  search: () => string | undefined;
+  onSearch: (search: string) => void;
   locations: Resource<LocationsData>;
   setLatLong: (coords: BaseWeatherFilters) => void;
+  debounce?: number;
 }
 
-export const WeatherSearch: Component<WeatherSearchProps> = ({
-  show,
-  setShow,
-  search,
-  setSearch,
-  locations,
-  setLatLong,
-}) => {
+export const WeatherSearch: Component<WeatherSearchProps> = props => {
+  const [search, setSearch] = createSignal<string | undefined>();
+  const [show, setShow] = createSignal(false);
+
+  //https://yarnpkg.com/package/@solid-primitives/scheduled
+  const trigger = debounce(
+    (search: string) => props.onSearch(search),
+    props.debounce || 500,
+  );
+
+  //set initial search
+  createEffect(alreadySetted => {
+    if (alreadySetted) return true;
+
+    const propsSearch = props.search();
+
+    if (!propsSearch) return false;
+
+    setSearch(props.search);
+
+    return true;
+  }, false);
+
   return (
     <div
       //@ts-ignore
@@ -31,12 +46,18 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
       class="relative"
     >
       <input
+        autocomplete="off"
         id="dropdownInput"
         onKeyUp={e => {
+          !show() && setShow(true);
+
           setSearch(e.currentTarget.value);
+
+          trigger.clear();
+          e.currentTarget.value && trigger(e.currentTarget.value);
         }}
         type="text"
-        class={`bg-gray-50 outline-none border border-gray-300 text-gray-900 text-sm rounded-lg hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+        class={`bg-gray-30 outline-none border border-gray-200/80 text-gray-900 text-sm rounded-md hover:border-blue-500 focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
           show() ? 'w-64' : 'w-44'
         } transition-all duration-100`}
         placeholder="Location"
@@ -46,22 +67,32 @@ export const WeatherSearch: Component<WeatherSearchProps> = ({
       <Show fallback={<div />} when={show()}>
         <div
           id="dropdown"
-          class={`z-10 bg-white divide-y divide-gray-100 rounded-lg shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
+          class={`z-50 mt-1 bg-white divide-y divide-gray-100 rounded-md shadow h-56 overflow-y-scroll scrollbar-hide::-webkit-scrollbar scrollbar-hide ${
             show() ? 'w-64' : 'w-44'
           } dark:bg-gray-700 absolute transition-all duration-100`}
         >
           <ul
-            class="p-2 text-sm text-gray-700 dark:text-gray-200 flex flex-col gap-2"
+            class="p-2 text-sm text-gray-700 dark:text-gray-200 flex flex-col"
             aria-labelledby="dropdownInput"
           >
-            <For each={locations()?.features} fallback={<div>No Options</div>}>
+            <For
+              each={props.locations()?.features}
+              fallback={
+                <div>
+                  {props.locations.loading ? 'Loading...' : 'No Options'}
+                </div>
+              }
+            >
               {item => (
                 <li
-                  class="cursor-pointer hover:bg-slate-200 px-2 rounded-md"
+                  title={item.properties.formatted}
+                  class="cursor-pointer font-normal hover:bg-slate-200 p-2 rounded-md overflow-ellipsis whitespace-nowrap overflow-hidden"
                   onClick={() => {
                     setSearch(item.properties.formatted);
+
                     setShow(false);
-                    setLatLong({
+
+                    props.setLatLong({
                       lat: item.properties.lat,
                       lon: item.properties.lon,
                     });

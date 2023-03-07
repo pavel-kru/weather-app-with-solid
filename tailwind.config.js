@@ -4,8 +4,17 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
-    colors,
+    extend: {
+      zIndex: { 1000: '1000' },
+    },
+    colors: {
+      ...colors,
+      'main-bg': '#49e6ff1c',
+      'day-card-bg': '#ffffff',
+    },
+    fontFamily: { Roboto: 'Roboto' },
+    hueRotate: { '-30': `-30deg` },
+    skew: { '-12': `-12deg` },
   },
   plugins: [],
 };
