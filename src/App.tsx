@@ -33,6 +33,7 @@ const App: Component = () => {
     setLatLong,
     locations,
     todayForecast,
+    sunriseSunset,
     fiveDaysForecast,
   } = useApp();
 
@@ -49,11 +50,7 @@ const App: Component = () => {
               setLatLong={setLatLong}
             />
             <div class={`bg-white ${flex} p-2 gap-2`}>
-              <TemperatureBox
-                temperature={
-                  todayForecast()?.main.temp ? todayForecast().main.temp : 0
-                }
-              />
+              <TemperatureBox temperature={todayForecast} />
               <Show when={todayForecast()?.main}>
                 <TodayTemperatureBox temperature={todayForecast().main} />
               </Show>
@@ -81,7 +78,15 @@ const App: Component = () => {
           <Routes>
             <Route path="/now" component={Now} />
             <Route path="/tomorrow" component={Tomorrow} />
-            <Route path="/" element={<Today forecast={todayForecast()} />} />
+            <Route
+              path="/"
+              element={
+                <Today
+                  forecast={todayForecast()}
+                  sunriseSunset={sunriseSunset}
+                />
+              }
+            />
           </Routes>
         </main>
       </div>

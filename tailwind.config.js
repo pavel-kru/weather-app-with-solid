@@ -15,6 +15,10 @@ module.exports = {
     fontFamily: { Roboto: 'Roboto' },
     hueRotate: { '-30': `-30deg` },
     skew: { '-12': `-12deg` },
+    backgroundImage: {
+      clouds: "url('/src/assets/clouds.jpg')",
+      'sun-path': "url('/src/assets/day_path.svg')",
+    },
   },
   plugins: [],
 };

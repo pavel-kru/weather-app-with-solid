@@ -1,9 +1,9 @@
 import { DayType } from '../components/day-card-list/types';
-import { BaseWeatherFilters, LocationsData } from './api.types';
+import { BaseWeatherFilters, LocationsData, SinriseSunsetData } from './api.types';
 import { BaseApiClient } from './base-api-client';
 
 class ProjectApi extends BaseApiClient {
-  getLocations = async (search: string): Promise<LocationsData> =>
+  getLocations = async (search: string) =>
     await this.api
       .get(`geocode/autocomplete`, {
         prefixUrl: 'https://api.geoapify.com/v1/',
@@ -12,9 +12,9 @@ class ProjectApi extends BaseApiClient {
           apiKey: import.meta.env.VITE_GEOAPIFY_API_KEY,
         },
       })
-      .json();
+      .json<LocationsData>();
 
-  getTodayForecast = async (filters: BaseWeatherFilters): Promise<DayType> =>
+  getTodayForecast = async (filters: BaseWeatherFilters) =>
     await this.api
       .get('weather', {
         searchParams: {
@@ -23,7 +23,7 @@ class ProjectApi extends BaseApiClient {
           appid: import.meta.env.VITE_OPEN_WEATHER,
         },
       })
-      .json();
+      .json<DayType>();
 
   get5DaysForecast = async (filters: BaseWeatherFilters) =>
     await this.api
@@ -36,14 +36,19 @@ class ProjectApi extends BaseApiClient {
       })
       .json();
 
-  getSunriseSunset = async (filters: BaseWeatherFilters) =>
-    await this.api.get('json', {
-      prefixUrl: 'https://api.sunrise-sunset.org',
-      searchParams: {
-        formatted: 0,
-        ...filters,
-      },
-    });
+  getSunriseSunset = async (filters: BaseWeatherFilters) => {
+    const data = await this.api
+      .get('json', {
+        prefixUrl: 'https://api.sunrise-sunset.org',
+        searchParams: {
+          formatted: 0,
+          ...filters,
+        },
+      })
+      .json<SinriseSunsetData>();
+
+    return data.results;
+  };
 }
 
 export const projectApi = new ProjectApi();

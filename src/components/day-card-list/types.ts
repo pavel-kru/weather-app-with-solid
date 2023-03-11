@@ -1,3 +1,6 @@
+import type { Resource } from 'solid-js';
+import type { SinriseSunsetData } from '../../api';
+
 type Coord = {
   lon: number;
   lat: number;
@@ -22,7 +25,7 @@ export type Main = {
 export type Wind = {
   speed: number;
   deg: number;
-  gust: number
+  gust: number;
 };
 
 type Sys = {
@@ -57,3 +60,5 @@ export type DayType = {
   name: string;
   cod: number;
 };
+
+export type SunriseSunset = Resource<SinriseSunsetData['results']>;
