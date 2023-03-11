@@ -7,13 +7,9 @@ export const getSunPosition = (
 
   const sunrise = new Date(props.sunrise).getTime();
 
-  const dayLengthInMs =
-    (new Date(props.sunset).getTime() - sunrise);
+  const dayLengthInMs = props.day_length * 1000;
 
   const rotatePerMs = 74 / dayLengthInMs;
 
-  return (
-    -37 +
-    (new Date().getTime() - sunrise) * rotatePerMs
-  );
+  return -37 + (new Date().getTime() - sunrise) * rotatePerMs;
 };

@@ -60,15 +60,15 @@ export type LocationsData = {
 
 export type SinriseSunsetData = {
   results: {
-    sunrise: '2023-03-11T06:22:56+00:00';
-    sunset: '2023-03-11T17:57:11+00:00';
-    solar_noon: '2023-03-11T12:10:03+00:00';
-    day_length: 41655;
-    civil_twilight_begin: '2023-03-11T05:49:37+00:00';
-    civil_twilight_end: '2023-03-11T18:30:30+00:00';
-    nautical_twilight_begin: '2023-03-11T05:08:34+00:00';
-    nautical_twilight_end: '2023-03-11T19:11:33+00:00';
-    astronomical_twilight_begin: '2023-03-11T04:26:20+00:00';
-    astronomical_twilight_end: '2023-03-11T19:53:47+00:00';
+    sunrise: string;
+    sunset: string;
+    solar_noon: string;
+    day_length: number;
+    civil_twilight_begin: string;
+    civil_twilight_end: string;
+    nautical_twilight_begin: string;
+    nautical_twilight_end: string;
+    astronomical_twilight_begin: string;
+    astronomical_twilight_end: string;
   };
 };
