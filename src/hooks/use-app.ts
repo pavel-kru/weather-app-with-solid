@@ -12,8 +12,6 @@ export const useApp = () => {
 
   navigator.geolocation.getCurrentPosition(setInitalPosition);
 
-  
-
   // Resources
   const [locations] = createResource(search, projectApi.getLocations);
 
@@ -23,8 +21,11 @@ export const useApp = () => {
     projectApi.get5DaysForecast,
   );
 
+  const [sunriseSunset] = createResource(latLong, projectApi.getSunriseSunset);
+
   createEffect(initial => {
     if (!initial) return false;
+    sunriseSunset();
 
     const forcast = todayForecast();
     if (!forcast) return true;

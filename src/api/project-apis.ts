@@ -35,6 +35,15 @@ class ProjectApi extends BaseApiClient {
         },
       })
       .json();
+
+  getSunriseSunset = async (filters: BaseWeatherFilters) =>
+    await this.api.get('json', {
+      prefixUrl: 'https://api.sunrise-sunset.org',
+      searchParams: {
+        formatted: 0,
+        ...filters,
+      },
+    });
 }
 
 export const projectApi = new ProjectApi();

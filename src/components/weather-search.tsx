@@ -53,7 +53,6 @@ export const WeatherSearch: Component<WeatherSearchProps> = props => {
 
           setSearch(e.currentTarget.value);
 
-          trigger.clear();
           e.currentTarget.value && trigger(e.currentTarget.value);
         }}
         type="text"

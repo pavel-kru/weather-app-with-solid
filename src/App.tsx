@@ -1,5 +1,4 @@
-import { Component, createEffect, For, Show } from 'solid-js';
-import { createResource, createSignal } from 'solid-js';
+import { Component, For, Show } from 'solid-js';
 import { lazy } from 'solid-js';
 import { Router, Routes, Route, A } from '@solidjs/router';
 
@@ -7,7 +6,6 @@ import { Router, Routes, Route, A } from '@solidjs/router';
 const Now = lazy(() => import('./views/Now'));
 const Today = lazy(() => import('./views/Today'));
 const Tomorrow = lazy(() => import('./views/Tomorrow'));
-import { BaseWeatherFilters, projectApi } from './api';
 import { TodayTemperatureBox, WeatherSearch, Wind } from './components';
 import { useApp } from './hooks';
 import { TemperatureBox } from './components/temperature/temperature-box';

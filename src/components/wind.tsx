@@ -14,7 +14,8 @@ export const Wind: Component<WindProps> = props => {
         'background-image': getWindColor(props.wind),
       }}
     >
-      {props.wind.speed.toFixed(0)} - {props.wind.gust.toFixed(0)}
+      {props.wind.speed.toFixed(0)}
+      {props.wind.gust ? ` - ${props.wind.gust?.toFixed(0)}` : ''}
     </div>
   );
 };
@@ -26,6 +27,6 @@ const mediumWind =
   'linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 235, 170, 1) 30%)';
 
 function getWindColor(wind: WindProps['wind']) {
-  if (wind.gust - wind.speed >= 5) return mediumWind;
+  if (+(wind.gust || 0).toFixed(0) - +wind.speed.toFixed(0) >= 5) return mediumWind;
   return lightWind;
 }
