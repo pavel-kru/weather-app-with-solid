@@ -5,7 +5,7 @@ export const getSunPosition = (
 ) => {
   if (!props) return -37;
 
-  const sunrise = new Date(props.sunrise).getTime();
+  const sunrise = new Date(props.astronomical_twilight_begin).getTime();
 
   const dayLengthInMs = props.day_length * 1000;
 
