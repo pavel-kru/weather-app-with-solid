@@ -19,7 +19,7 @@ const DetailedDayCard: Component<DetailedDayCardProps> = props => {
 
   const time = createPolled(
     () => format(new Date(), "iii',' M' 'MMM',' HH:mm"),
-    1000,
+    10000,
   );
 
   return (
