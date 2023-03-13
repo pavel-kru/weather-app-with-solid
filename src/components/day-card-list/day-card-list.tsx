@@ -5,7 +5,7 @@ import {
 } from 'solid-js';
 import { For } from 'solid-js';
 
-import type { DayType } from './types';
+import type { DayType, SunriseSunset } from './types';
 
 // Components
 import DayCard from './day-card';
@@ -13,6 +13,7 @@ import DetailedDayCard from './detailed-day-card';
 
 interface DayCardListProps {
   list: DayType[];
+  sunriseSunset: SunriseSunset;
 }
 
 const DayCardList: Component<DayCardListProps> = props => {
@@ -48,7 +49,9 @@ const DayCardList: Component<DayCardListProps> = props => {
       </div>
 
       <Show when={selectedCard()} keyed>
-        {card => <DetailedDayCard day={card} />}
+        {card => (
+          <DetailedDayCard day={card} sunriseSunset={props.sunriseSunset} />
+        )}
       </Show>
     </>
   );

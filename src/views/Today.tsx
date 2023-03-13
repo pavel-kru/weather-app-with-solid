@@ -1,12 +1,13 @@
 import { Component, createMemo } from 'solid-js';
 
-import type { DayType } from '../components/day-card-list/types';
+import type { DayType, SunriseSunset } from '../components/day-card-list/types';
 
 // Components
 import { DayCardList } from '../components';
 
 interface TodayProps {
   forecast: DayType | undefined;
+  sunriseSunset: SunriseSunset;
 }
 
 const Today: Component<TodayProps> = props => {
@@ -14,7 +15,7 @@ const Today: Component<TodayProps> = props => {
 
   return (
     <div class="">
-      <DayCardList list={list()} />
+      <DayCardList list={list()} sunriseSunset={props.sunriseSunset} />
     </div>
   );
 };

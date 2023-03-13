@@ -1,7 +1,7 @@
 import { debounce } from '@solid-primitives/scheduled';
 import { Component, createEffect, createSignal, Resource } from 'solid-js';
 import { Show, For } from 'solid-js';
-import type { BaseWeatherFilters, LocationsData } from '../api';
+import type { BaseWeatherFilters, LocationsData, SinriseSunsetData } from '../api';
 import click from '../utils/click-outside';
 
 // https://github.com/solidjs/solid/discussions/845

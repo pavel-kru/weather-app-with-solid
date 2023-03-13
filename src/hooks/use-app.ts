@@ -25,7 +25,6 @@ export const useApp = () => {
 
   createEffect(initial => {
     if (!initial) return false;
-    sunriseSunset();
 
     const forcast = todayForecast();
     if (!forcast) return true;
@@ -44,5 +43,6 @@ export const useApp = () => {
     locations,
     todayForecast,
     fiveDaysForecast,
+    sunriseSunset,
   };
 };
