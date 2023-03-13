@@ -25,7 +25,8 @@ const DetailedDayCard: Component<DetailedDayCardProps> = props => {
   return (
     <div class={`${flex}  bg-day-card-bg rounded-xl p-4`}>
       <div
-        class={`flex items-center w-[100%] h-[400px] flex-col z-10 bg-day-card-bg p-4 bg-clouds bg-center bg-cover`}
+      //TODO: change bg image due to weather
+        class={`flex items-center w-[100%] h-[400px] flex-col z-10 bg-day-card-bg p-4 bg-sunny-clouds bg-center bg-cover`}
       >
         <div class="text-white text-base font-semibold mb-5 ">{time()}</div>
         <div class="w-[390px] h-[250px]">

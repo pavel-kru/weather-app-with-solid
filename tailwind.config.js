@@ -17,6 +17,7 @@ module.exports = {
     skew: { '-12': `-12deg` },
     backgroundImage: {
       clouds: "url('/src/assets/clouds.jpg')",
+      "sunny-clouds": "url('/src/assets/sunny-clouds.jpg')",
       'sun-path': "url('/src/assets/day_path.svg')",
     },
   },
