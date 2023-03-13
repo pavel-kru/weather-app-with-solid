@@ -14,7 +14,7 @@ interface DetailedDayCardProps {
 const DetailedDayCard: Component<DetailedDayCardProps> = props => {
   const rotate = createPolled(
     () => getSunPosition(props.sunriseSunset()),
-    3600000,
+    60000,
   );
 
   const time = createPolled(
